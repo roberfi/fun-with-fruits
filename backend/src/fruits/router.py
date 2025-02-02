@@ -32,4 +32,4 @@ async def update_fruit(
 
 @router.delete("/fruits/{fruit_id}", tags=["fruits"], status_code=204)
 async def delete_fruit(fruit_id: int, db: Session = Depends(get_db)) -> None:
-    return service.delete_fruit(fruit_id, db)
+    service.delete_fruit(fruit_id, db)

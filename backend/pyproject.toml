@@ -8,6 +8,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = ["fastapi (>=0.115.8,<0.116.0)", "uvicorn (>=0.34.0,<0.35.0)", "sqlalchemy (>=2.0.37,<3.0.0)"]
 
+[tool.poetry]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -19,3 +21,10 @@ optional = true
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.14.1"
 ruff = "^0.9.4"
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.4"
+httpx = "^0.28.1"
