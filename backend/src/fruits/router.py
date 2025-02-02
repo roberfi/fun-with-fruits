@@ -1,34 +1,35 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from src.fruits.services import FruitsDb
+from src.database import get_db
+from src.fruits import service
 from src.fruits.schemas import Fruit, FruitCreate, FruitUpdate
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
 
-fruits_db = FruitsDb()
-
-
 @router.get("/fruits", tags=["fruits"])
-async def read_fruits() -> list[Fruit]:
-    return fruits_db.get_fruits()
+async def read_fruits(db: Session = Depends(get_db)) -> list[Fruit]:
+    return service.get_fruits(db)
 
 
 @router.get("/fruits/{fruit_id}", tags=["fruits"])
-async def read_fruit(fruit_id: int) -> Fruit:
-    return fruits_db.get_fruit(fruit_id)
+async def read_fruit(fruit_id: int, db: Session = Depends(get_db)) -> Fruit:
+    return service.get_fruit(fruit_id, db)
 
 
-@router.post("/fruits", tags=["fruits"])
-async def create_fruit(fruit: FruitCreate) -> Fruit:
-    return fruits_db.add_fruit(fruit)
+@router.post("/fruits", tags=["fruits"], status_code=201)
+async def create_fruit(fruit: FruitCreate, db: Session = Depends(get_db)) -> Fruit:
+    return service.add_fruit(fruit, db)
 
 
 @router.put("/fruits/{fruit_id}", tags=["fruits"])
-async def update_fruit(fruit_id: int, fruit: FruitUpdate) -> Fruit:
-    return fruits_db.update_fruit(fruit_id, fruit)
+async def update_fruit(
+    fruit_id: int, fruit: FruitUpdate, db: Session = Depends(get_db)
+) -> Fruit:
+    return service.update_fruit(fruit_id, fruit, db)
 
 
-@router.delete("/fruits/{fruit_id}", tags=["fruits"])
-async def delete_fruit(fruit_id: int) -> None:
-    return fruits_db.delete_fruit(fruit_id)
+@router.delete("/fruits/{fruit_id}", tags=["fruits"], status_code=204)
+async def delete_fruit(fruit_id: int, db: Session = Depends(get_db)) -> None:
+    return service.delete_fruit(fruit_id, db)

@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from src.fruits.router import router as fruits_router
+from src.database import Base, engine
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Fun with Fruits API",
