@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from src.fruits.router import router as fruits_router
+
 from src.database import Base, engine
+from src.fruits.router import router as fruits_router
 
 Base.metadata.create_all(bind=engine)
 

@@ -6,14 +6,36 @@ authors = [{ name = "roberfi" }]
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["fastapi (>=0.115.8,<0.116.0)", "uvicorn (>=0.34.0,<0.35.0)", "sqlalchemy (>=2.0.37,<3.0.0)"]
+dependencies = [
+    "fastapi (>=0.115.8,<0.116.0)",
+    "uvicorn (>=0.34.0,<0.35.0)",
+    "sqlalchemy (>=2.0.37,<3.0.0)",
+]
 
 [tool.poetry]
 package-mode = false
 
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.mypy]
+python_version = "3.13"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle error
+    "EM",  # flake8-errmsg
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "PL",  # Pylint
+    "RUF", # ruff-specific-rules
+    "TC",  # flake8-type-checking
+    "W",   # pycodestyle warning
+]
 
 [tool.poetry.group.dev]
 optional = true
@@ -28,3 +50,7 @@ optional = true
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.4"
 httpx = "^0.28.1"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

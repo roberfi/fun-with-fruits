@@ -1,4 +1,5 @@
 from typing import Annotated
+
 from pydantic import BaseModel, BeforeValidator, Field
 
 CapitalizedStr = Annotated[str, BeforeValidator(lambda raw: raw.capitalize())]
@@ -20,6 +21,4 @@ class FruitCreate(BaseModel):
 
 
 class FruitUpdate(BaseModel):
-    color: CapitalizedStr | None = Field(
-        default=None, description=FRUIT_COLOR_DESCRIPTION
-    )
+    color: CapitalizedStr | None = Field(default=None, description=FRUIT_COLOR_DESCRIPTION)

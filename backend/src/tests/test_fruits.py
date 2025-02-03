@@ -1,8 +1,8 @@
 import pytest
-
 from fastapi.testclient import TestClient
-from src.fruits.models import DBFruit
 from sqlalchemy.orm import Session
+
+from src.fruits.models import DBFruit
 
 from . import assertions
 
@@ -36,25 +36,19 @@ def test_get_fruits(client: TestClient) -> None:
 def test_get_fruit(client: TestClient) -> None:
     response = client.get("/fruits/2")
     assertions.assert_status_code(response, expected=200)
-    assertions.assert_response_json(
-        response, expected={"id": 2, "name": "Banana", "color": "Yellow"}
-    )
+    assertions.assert_response_json(response, expected={"id": 2, "name": "Banana", "color": "Yellow"})
 
 
 def test_get_non_existing_fruit(client: TestClient) -> None:
     response = client.get("/fruits/3")
     assertions.assert_status_code(response, expected=404)
-    assertions.assert_response_json(
-        response, expected={"detail": "Fruit with id 3 not found"}
-    )
+    assertions.assert_response_json(response, expected={"detail": "Fruit with id 3 not found"})
 
 
 def test_add_fruit(client: TestClient) -> None:
     response = client.post("/fruits", json={"name": "orange", "color": "orange"})
     assertions.assert_status_code(response, expected=201)
-    assertions.assert_response_json(
-        response, expected={"id": 3, "name": "Orange", "color": "Orange"}
-    )
+    assertions.assert_response_json(response, expected={"id": 3, "name": "Orange", "color": "Orange"})
 
     response = client.get("/fruits")
     assertions.assert_status_code(response, expected=200)
@@ -71,9 +65,7 @@ def test_add_fruit(client: TestClient) -> None:
 def test_edit_fruit(client: TestClient) -> None:
     response = client.put("/fruits/1", json={"color": "green"})
     assertions.assert_status_code(response, expected=200)
-    assertions.assert_response_json(
-        response, expected={"id": 1, "name": "Apple", "color": "Green"}
-    )
+    assertions.assert_response_json(response, expected={"id": 1, "name": "Apple", "color": "Green"})
 
     response = client.get("/fruits")
     assertions.assert_status_code(response, expected=200)
@@ -89,9 +81,7 @@ def test_edit_fruit(client: TestClient) -> None:
 def test_edit_non_existing_fruit(client: TestClient) -> None:
     response = client.put("/fruits/3", json={"color": "green"})
     assertions.assert_status_code(response, expected=404)
-    assertions.assert_response_json(
-        response, expected={"detail": "Fruit with id 3 not found"}
-    )
+    assertions.assert_response_json(response, expected={"detail": "Fruit with id 3 not found"})
 
 
 def test_delete_fruit(client: TestClient) -> None:
@@ -112,6 +102,4 @@ def test_delete_fruit(client: TestClient) -> None:
 def test_delete_non_existing_fruit(client: TestClient) -> None:
     response = client.delete("/fruits/3")
     assertions.assert_status_code(response, expected=404)
-    assertions.assert_response_json(
-        response, expected={"detail": "Fruit with id 3 not found"}
-    )
+    assertions.assert_response_json(response, expected={"detail": "Fruit with id 3 not found"})

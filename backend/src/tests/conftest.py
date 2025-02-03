@@ -1,10 +1,12 @@
 from collections.abc import Iterator
+
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import Engine, StaticPool, create_engine
-from src.main import app
-import pytest
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session, sessionmaker
+
 from src.database import Base, get_db
+from src.main import app
 
 
 @pytest.fixture(scope="session")
@@ -22,15 +24,13 @@ def db_engine() -> Iterator[Engine]:
 
 @pytest.fixture(scope="session")
 def session_local_factory(db_engine: Engine) -> sessionmaker:
-    TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
+    test_session_local = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
     Base.metadata.create_all(bind=db_engine)
-    return TestSessionLocal
+    return test_session_local
 
 
 @pytest.fixture(scope="function", autouse=True)
-def db_session(
-    db_engine: Engine, session_local_factory: sessionmaker
-) -> Iterator[Session]:
+def db_session(db_engine: Engine, session_local_factory: sessionmaker) -> Iterator[Session]:
     connection = db_engine.connect()
     transaction = connection.begin()
 

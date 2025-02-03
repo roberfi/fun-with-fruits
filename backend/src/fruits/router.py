@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
 from src.database import get_db
 from src.fruits import service
 from src.fruits.schemas import Fruit, FruitCreate, FruitUpdate
-from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -24,9 +24,7 @@ async def create_fruit(fruit: FruitCreate, db: Session = Depends(get_db)) -> Fru
 
 
 @router.put("/fruits/{fruit_id}", tags=["fruits"])
-async def update_fruit(
-    fruit_id: int, fruit: FruitUpdate, db: Session = Depends(get_db)
-) -> Fruit:
+async def update_fruit(fruit_id: int, fruit: FruitUpdate, db: Session = Depends(get_db)) -> Fruit:
     return service.update_fruit(fruit_id, fruit, db)
 
 
