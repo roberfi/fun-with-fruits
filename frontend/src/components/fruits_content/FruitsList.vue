@@ -8,7 +8,7 @@
           :key="fruit.id"
           class="fwf-list-item"
           :class="fruit == selectedFruit ? 'fwf-active-list-item' : ''"
-          @click="updateSelectedFruit(fruit)"
+          @click="selectFruit(fruit)"
         >
           <div class="flex justify-between items-center">
             <h2 class="text-lg font-medium text-gray-900">{{ fruit.name }}</h2>
@@ -23,43 +23,14 @@
 <script>
 export default {
   name: 'FruitsList',
-  props: ['selectedFruit'],
+  props: ['fruits', 'selectedFruit'],
   data() {
-    return {
-      fruits: [],
-    }
+    return {}
   },
   methods: {
-    async fetchFruits() {
-      this.fruits = [
-        {
-          id: 1,
-          name: 'Banana',
-          color: 'Yellow',
-        },
-        {
-          id: 2,
-          name: 'Apple',
-          color: 'Red',
-        },
-        {
-          id: 3,
-          name: 'Orange',
-          color: 'Orange',
-        },
-        {
-          id: 4,
-          name: 'Kiwi',
-          color: 'Brown',
-        },
-      ]
+    selectFruit(selectedFruit) {
+      this.$emit('selectFruit', selectedFruit)
     },
-    updateSelectedFruit(selectedFruit) {
-      this.$emit('updateSelectedFruit', selectedFruit)
-    },
-  },
-  mounted() {
-    this.fetchFruits()
   },
 }
 </script>

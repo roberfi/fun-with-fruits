@@ -21,7 +21,7 @@
         <button v-if="fruit_id !== null" @click="deleteFruit" class="fwf-btn fwf-btn-delete">
           Delete
         </button>
-        <button @click="clearForm" class="fwf-btn fwf-btn-clear ms-auto">Clear</button>
+        <button @click="deselectFruit" class="fwf-btn fwf-btn-clear ms-auto">Clear</button>
       </div>
     </div>
   </div>
@@ -42,20 +42,24 @@ export default {
     addFruit() {
       // To replace by post request
       console.log(`Add ${this.fruit_name} (${this.fruit_color})`)
-      this.clearForm()
+      this.$emit('addFruit', { name: this.fruit_name, color: this.fruit_color })
+      this.fruit_color = ''
+      this.fruit_name = ''
     },
     updateFruit() {
       // To replace by put request
       console.log(`Update ${this.fruit_name}: ${this.selectedFruit.color} -> ${this.fruit_color}`)
-      this.clearForm()
+      this.$emit('updateFruit', this.fruit_id, { color: this.fruit_color })
+      this.deselectFruit()
     },
     deleteFruit() {
       // To replace by delete request
       console.log(`Delete ${this.fruit_name}`)
-      this.clearForm()
+      this.$emit('deleteFruit')
+      this.deselectFruit()
     },
-    clearForm() {
-      this.$emit('clearSelectedFruit')
+    deselectFruit() {
+      this.$emit('deselectFruit')
     },
   },
   computed: {
