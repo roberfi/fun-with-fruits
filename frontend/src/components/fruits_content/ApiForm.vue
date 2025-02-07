@@ -40,21 +40,15 @@ export default {
   },
   methods: {
     addFruit() {
-      // To replace by post request
-      console.log(`Add ${this.fruit_name} (${this.fruit_color})`)
       this.$emit('addFruit', { name: this.fruit_name, color: this.fruit_color })
       this.fruit_color = ''
       this.fruit_name = ''
     },
     updateFruit() {
-      // To replace by put request
-      console.log(`Update ${this.fruit_name}: ${this.selectedFruit.color} -> ${this.fruit_color}`)
       this.$emit('updateFruit', this.fruit_id, { color: this.fruit_color })
       this.deselectFruit()
     },
     deleteFruit() {
-      // To replace by delete request
-      console.log(`Delete ${this.fruit_name}`)
       this.$emit('deleteFruit')
       this.deselectFruit()
     },

@@ -21,6 +21,8 @@ import FruitsList from './fruits_content/FruitsList.vue'
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'FruitsContainer',
   data() {
@@ -31,28 +33,10 @@ export default {
   },
   methods: {
     async fetchFruits() {
-      this.fruits = [
-        {
-          id: 1,
-          name: 'Banana',
-          color: 'Yellow',
-        },
-        {
-          id: 2,
-          name: 'Apple',
-          color: 'Red',
-        },
-        {
-          id: 3,
-          name: 'Orange',
-          color: 'Orange',
-        },
-        {
-          id: 4,
-          name: 'Kiwi',
-          color: 'Brown',
-        },
-      ]
+      await axios
+        .get('/fruits')
+        .then((response) => (this.fruits = response.data))
+        .catch((error) => console.error('Error fetching fruits:', error))
     },
     selectFruit(selectedFruit) {
       this.selectedFruit = selectedFruit
@@ -61,20 +45,36 @@ export default {
       this.selectedFruit = null
     },
     async addFruit(newFruit) {
-      this.fruits.push({
-        id: Math.max(0, ...this.fruits.map((fruit) => fruit.id)) + 1,
-        ...newFruit,
-      })
+      await axios
+        .post('/fruits', {
+          name: newFruit.name,
+          color: newFruit.color,
+        })
+        .then((response) => this.fruits.push(response.data))
+        .catch((error) => console.error('Error adding fruit:', error))
     },
     async updateFruit(fruitId, updatedValues) {
-      Object.assign(
-        this.fruits.find((fruit) => fruitId == fruit.id),
-        updatedValues,
-      )
+      await axios
+        .put('/fruits/' + fruitId, updatedValues)
+        .then((response) =>
+          Object.assign(
+            this.fruits.find((fruit) => fruitId == fruit.id),
+            response.data,
+          ),
+        )
+        .catch((error) => console.error('Error updating fruit:', error))
     },
     async deleteFruit() {
-      const fruitIndex = this.fruits.findIndex((fruit) => fruit.id === this.selectedFruit.id)
-      this.fruits.splice(fruitIndex, 1)
+      const idToDelete = this.selectedFruit.id
+      await axios
+        .delete('/fruits/' + idToDelete)
+        .then(() =>
+          this.fruits.splice(
+            this.fruits.findIndex((fruit) => fruit.id === idToDelete),
+            1,
+          ),
+        )
+        .catch((error) => console.error('Error updating fruit:', error))
     },
   },
   mounted() {

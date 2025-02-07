@@ -29,3 +29,6 @@ dmypy.json
 
 # logs
 *.log
+
+# build
+dist/
