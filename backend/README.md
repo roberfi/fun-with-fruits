@@ -76,3 +76,9 @@ uvicorn src.main:app --reload
 ```
 
 This will start the FastAPI server, and you can access the API documentation at `http://127.0.0.1:8000/docs` (Swagger) or `http://127.0.0.1:8000/redoc` (ReDoc).
+
+## Settings
+
+To add custom settings, create a `.env` file in the root folder of the backend project. The following variables can be set:
+
+- `ALLOWED_ORIGINS`: comma separated string with the the list of origins that should be permitted to make cross-origin requests. ie: `https://example.org,https://www.example.org`. You can use `*` to allow any origin. By default, no cross-origin requests are allowed.
