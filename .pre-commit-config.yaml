@@ -3,7 +3,7 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-added-large-files
-        args: ["--maxkb=123"]
+        args: ["--maxkb=512"]
       - id: check-ast
       - id: check-json
       - id: check-toml

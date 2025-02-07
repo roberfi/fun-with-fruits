@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+@import '@fontsource/nunito';
+
+@layer base {
+  nav {
+    @apply sticky top-0 px-10 py-5 text-lime-200 bg-gray-800 border-b-4 border-lime-200;
+  }
+
+  h1 {
+    @apply font-bold text-3xl md:text-5xl;
+  }
+}
+
+@layer components {
+  .card {
+    @apply p-6 mx-5 bg-white border border-gray-200 rounded-lg shadow-sm;
+  }
+
+  .fwf-label {
+    @apply block mb-2 ms-2;
+  }
+
+  .fwf-form-input {
+    @apply bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5;
+
+    @variant disabled {
+      @apply bg-gray-200 text-gray-700;
+    }
+  }
+
+  .fwf-btn {
+    @apply cursor-pointer text-white font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center;
+  }
+
+  .fwf-btn-send {
+    @apply bg-emerald-500;
+
+    @variant hover {
+      @apply bg-emerald-700;
+    }
+  }
+
+  .fwf-btn-update {
+    @apply bg-amber-500;
+
+    @variant hover {
+      @apply bg-amber-700;
+    }
+  }
+
+  .fwf-btn-delete {
+    @apply bg-red-700;
+
+    @variant hover {
+      @apply bg-red-900;
+    }
+  }
+
+  .fwf-btn-clear {
+    @apply bg-sky-600;
+
+    @variant hover {
+      @apply bg-sky-800;
+    }
+  }
+
+  .fwf-list-item {
+    @apply bg-gray-50 p-5 rounded-lg shadow-md cursor-pointer border-1 border-gray-200;
+
+    @variant hover {
+      @apply bg-gray-300;
+    }
+  }
+
+  .fwf-active-list-item {
+    @apply border-gray-400 bg-gray-200;
+  }
+}

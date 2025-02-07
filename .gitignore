@@ -6,6 +6,9 @@ __pycache__/
 # Database
 db.sqlite3
 
+# Node
+node_modules/
+
 # Environments
 .env
 .venv
@@ -23,3 +26,9 @@ dmypy.json
 # IDEs
 .idea/
 .vscode/
+
+# logs
+*.log
+
+# build
+dist/
