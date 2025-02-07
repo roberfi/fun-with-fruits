@@ -1,16 +1,16 @@
 # fun-with-fruits
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+The frontend part of Fun With Fruits is developed with [Vue.js](https://vuejs.org/).
 
 ## Project Setup
+
+### Configure
+
+Create a `.env` file at the root path of the frontend. The following variables has to be set:
+
+- `VITE_BACKEND_HOST`: the base url where Fun With Fruits backend is listening for requests (ie: `http://localhost:8000/`).
+
+### Installation
 
 ```sh
 npm install
