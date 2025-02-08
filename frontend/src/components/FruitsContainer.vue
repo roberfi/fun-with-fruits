@@ -32,20 +32,20 @@ export default {
     }
   },
   methods: {
-    async fetchFruits() {
-      await axios
-        .get('/fruits')
-        .then((response) => (this.fruits = response.data))
-        .catch((error) => console.error('Error fetching fruits:', error))
-    },
     selectFruit(selectedFruit) {
       this.selectedFruit = selectedFruit
     },
     deselectFruit() {
       this.selectedFruit = null
     },
-    async addFruit(newFruit) {
-      await axios
+    fetchFruits() {
+      axios
+        .get('/fruits')
+        .then((response) => (this.fruits = response.data))
+        .catch((error) => console.error('Error fetching fruits:', error))
+    },
+    addFruit(newFruit) {
+      axios
         .post('/fruits', {
           name: newFruit.name,
           color: newFruit.color,
@@ -53,8 +53,8 @@ export default {
         .then((response) => this.fruits.push(response.data))
         .catch((error) => console.error('Error adding fruit:', error))
     },
-    async updateFruit(fruitId, updatedValues) {
-      await axios
+    updateFruit(fruitId, updatedValues) {
+      axios
         .put('/fruits/' + fruitId, updatedValues)
         .then((response) =>
           Object.assign(
@@ -64,9 +64,9 @@ export default {
         )
         .catch((error) => console.error('Error updating fruit:', error))
     },
-    async deleteFruit() {
+    deleteFruit() {
       const idToDelete = this.selectedFruit.id
-      await axios
+      axios
         .delete('/fruits/' + idToDelete)
         .then(() =>
           this.fruits.splice(
